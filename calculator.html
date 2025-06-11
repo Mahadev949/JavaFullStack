@@ -37,7 +37,7 @@
     <table align="center" style="margin-top: 10%;text-align: center;" cellspacing="20%" cellpadding="10%"  >
         <tr width="100%" >  
             <td colspan="4">   
-                <input type="text" id="display" style="width: 100%; height: 50px; font-size: 24px; text-align: right; border: 2px solid #0d6efd ;border-radius: 5px; "  readonly>
+                <input type="text" id="display" value="0" style="width: 100%; height: 50px; font-size: 24px; text-align: right; border: 2px solid #0d6efd ;border-radius: 5px; "  readonly>
             </td>
         </tr>
         <tr>
@@ -79,7 +79,7 @@
                 <button onclick="cal('3')" class="btn btn-outline-primary" style="width: 50px; height: 50px; font-size: 24px;">3</button>
             </td>
             <td>
-                <button onclick="cal('*')" class="btn btn-primary" style="width: 50px; height: 50px; font-size: 24px;">*</button>
+                <button onclick="cal('*')" class="btn btn-primary" style="width: 50px; height: 50px; font-size: 24px;">x</button>
             </td>
         </tr>
         <tr>
@@ -90,10 +90,12 @@
                 <button onclick="cal('.')" class="btn btn-outline-primary" style="width: 50px; height: 50px; font-size: 24px;  ">.</button>
             </td>
             <td>
-                <button onclick="cal('/')" class="btn btn-primary" style="width: 50px; height: 50px; font-size: 24px;">/</button>
+                <button onclick="cal('c')" class="btn btn-outline-danger" style="width: 50px; height: 50px; font-size: 24px;"><-</button>
+
             </td>
             <td>
-                <button onclick="cal('=')" class="btn btn-primary" style="width: 50px; height: 50px; font-size: 24px;">=</button>
+                <button onclick="cal('/')" class="btn btn-primary" style="width: 50px; height: 50px; font-size: 24px;">/</button>
+
             </td>
         </tr>
         <tr>
@@ -104,10 +106,11 @@
                 <button onclick="cal(')')" class="btn btn-outline-primary" style="width: 50px; height: 50px; font-size: 14px; text-align: center;  ">)</button>
             </td>
             <td>
-                <button onclick="cal('del')" class="btn btn-danger" style="width: 50px; height: 50px; font-size: 14px;">Del</button>
+                <button onclick="cal('del')" class="btn btn-outline-danger" style="width: 50px; height: 50px; font-size: 14px;">Del</button>
             </td>
             <td>
-                <button onclick="cal('c')" class="btn btn-danger" style="width: 50px; height: 50px; font-size: 24px;"><-</button>
+                                <button onclick="cal('=')" class="btn btn-primary" style="width: 50px; height: 50px; font-size: 24px;">=</button>
+
             </td>
         </tr>
     </table>
@@ -117,25 +120,52 @@
 </body>
 <script>
     let n=""
+    let t=""
     function cal(v){
         if (v=="="){
             document.getElementById("display").value=eval(n);
-            n=eval(n);
+            n=String(eval(n));
+            t=n;
         }
         else if (v=="del"){
-            document.getElementById("display").value= "";
+            document.getElementById("display").value= "0";
             n="";
+            t="";
         }
 
         else if (v=="c"){
             n=n.slice(0, -1);
+            t=n;
             document.getElementById("display").value= n;
             
         }
 
         else{
+            if (v=="+"|| v=="-" || v=="*"|| v=="/"|| v=="("|| v==")"|| v=="."){
+
+                if (n.slice(-1)==v || n.slice(-1)==v || n.slice(-1)==v || n.slice(-1)==v || n.slice(-1)==v || n.slice(-1)==v || n.slice(-1)==v){
+                    return;   
+                }
+            }
+            if(n.slice(-1)=="("||n.slice(-1)==")"||n.slice(-1)=="."){
+                if (v=="+"|| v=="-" || v=="*"|| v=="/"){
+                    return;
+                }
+            }
+
             n+=v;
-            document.getElementById("display").value= n;             
+
+
+
+            if (v=="*"){
+                t+="x";
+            }
+            else{
+            t+=v;
+            }
+
+
+            document.getElementById("display").value= t;             
         }
     }
 </script>
